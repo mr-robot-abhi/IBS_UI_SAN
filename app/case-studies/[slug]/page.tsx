@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Briefcase, CheckCircle, Building, Users } from 'lucide-react';
 
+// Update both query functions:
 async function getCaseStudy(slug: string) {
-  const study = await client.fetch<CaseStudy | null>(
+  return client.fetch<CaseStudy | null>(
     `*[_type == "caseStudies" && slug.current == $slug][0] {
       _id,
       title,
@@ -16,9 +17,11 @@ async function getCaseStudy(slug: string) {
       services,
       images
     }`,
-    { slug }
+    { slug },
+    {
+      next: { tags: ['caseStudies'] }
+    }
   );
-  return study;
 }
 
 async function getRelatedCaseStudies(currentStudyId: string, services: string[] = []) {
@@ -37,7 +40,9 @@ async function getRelatedCaseStudies(currentStudyId: string, services: string[] 
         client,
         images
       }`;
-  return client.fetch<CaseStudy[]>(query, { currentStudyId, services });
+  return client.fetch<CaseStudy[]>(query, { currentStudyId, services }, {
+    next: { tags: ['caseStudies'] }
+  });
 }
 
 export async function generateStaticParams() {

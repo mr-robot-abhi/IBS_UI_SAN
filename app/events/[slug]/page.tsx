@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { PortableText } from '@/components/sanity/PortableText';
 import { ChevronLeft, Calendar, MapPin, Clock, ExternalLink } from 'lucide-react';
 
+// Update both query functions:
 async function getEvent(slug: string) {
-  const event = await client.fetch<Event | null>(
+  return client.fetch<Event | null>(
     `*[_type == "events" && slug.current == $slug][0] {
       _id,
       title,
@@ -19,9 +20,11 @@ async function getEvent(slug: string) {
       registrationLink,
       image
     }`,
-    { slug }
+    { slug },
+    {
+      next: { tags: ['events'] }
+    }
   );
-  return event;
 }
 
 async function getRelatedEvents(currentEventId: string) {
@@ -34,7 +37,10 @@ async function getRelatedEvents(currentEventId: string) {
       location,
       image
     }`,
-    { currentEventId }
+    { currentEventId },
+    {
+      next: { tags: ['events'] }
+    }
   );
 }
 

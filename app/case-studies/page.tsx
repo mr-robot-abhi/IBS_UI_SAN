@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from '@/components/ui/button';
 import { Briefcase, ArrowRight } from 'lucide-react';
 
+// Already updated in your file - keep as is:
 async function getAllCaseStudies() {
   return client.fetch<CaseStudy[]>(
     `*[_type == "caseStudies"] | order(_createdAt desc) {
@@ -15,7 +16,11 @@ async function getAllCaseStudies() {
       client,
       services,
       images
-    }`
+    }`,
+    {},
+    {
+      next: { tags: ['caseStudies'] }
+    }
   );
 }
 
