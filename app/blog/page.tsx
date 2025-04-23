@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-// Update the getAllBlogPosts function:
 async function getAllBlogPosts() {
   return client.fetch<BlogPost[]>(
     `*[_type == "blog"] | order(publishDate desc) {
@@ -18,11 +17,7 @@ async function getAllBlogPosts() {
       author,
       categories,
       image
-    }`,
-    {},
-    {
-      next: { tags: ['blog'] } // Add revalidation tag
-    }
+    }`
   );
 }
 

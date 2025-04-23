@@ -7,9 +7,8 @@ import { Calendar, User, Tag, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-// Update both query functions:
 async function getBlogPost(slug: string) {
-  return client.fetch<BlogPost | null>(
+  const post = await client.fetch<BlogPost | null>(
     `*[_type == "blog" && slug.current == $slug][0] {
       _id,
       title,
@@ -20,27 +19,28 @@ async function getBlogPost(slug: string) {
       categories,
       image
     }`,
-    { slug },
-    {
-      next: { tags: ['blog'] } // Same tag as listing
-    }
+    { slug }
   );
+  return post;
 }
 
-async function getRelatedPosts(currentPostId: string, categories: string[]) {
-  return client.fetch<BlogPost[]>(
-    `*[_type == "blog" && _id != $currentPostId && count((categories[])[@ in $categories]) > 0] | order(publishDate desc)[0...3] {
-      _id,
-      title,
-      slug,
-      publishDate,
-      image
-    }`,
-    { currentPostId, categories },
-    {
-      next: { tags: ['blog'] }
-    }
-  );
+async function getRelatedPosts(currentPostId: string, categories: string[] = []) {
+  const query = categories.length === 0
+    ? `*[_type == "blog" && _id != $currentPostId] | order(publishDate desc)[0...3] {
+        _id,
+        title,
+        slug,
+        publishDate,
+        image
+      }`
+    : `*[_type == "blog" && _id != $currentPostId && count((categories[])[@ in $categories]) > 0] | order(publishDate desc)[0...3] {
+        _id,
+        title,
+        slug,
+        publishDate,
+        image
+      }`;
+  return client.fetch<BlogPost[]>(query, { currentPostId, categories });
 }
 
 export async function generateStaticParams() {

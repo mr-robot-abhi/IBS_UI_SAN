@@ -3,7 +3,6 @@ import { Award } from '@/types/sanity';
 import { Trophy, Calendar, Bookmark } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Update the getAllAwards function:
 async function getAllAwards() {
   return client.fetch<Award[]>(
     `*[_type == "awards"] | order(year desc) {
@@ -13,11 +12,7 @@ async function getAllAwards() {
       description,
       image,
       category
-    }`,
-    {},
-    {
-      next: { tags: ['awards'] } // New tag for awards
-    }
+    }`
   );
 }
 

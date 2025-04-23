@@ -6,7 +6,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 
-// Update the getAllEvents function:
 async function getAllEvents() {
   return client.fetch<Event[]>(
     `*[_type == "events"] | order(date asc) {
@@ -18,13 +17,10 @@ async function getAllEvents() {
       description,
       registrationLink,
       image
-    }`,
-    {},
-    {
-      next: { tags: ['events'] } // Add revalidation tag
-    }
+    }`
   );
 }
+
 export default async function EventsPage() {
   const allEvents = await getAllEvents();
   const now = new Date().toISOString();
