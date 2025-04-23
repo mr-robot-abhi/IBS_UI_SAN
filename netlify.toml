@@ -1,11 +1,14 @@
 [build]
   command = "npm run build"
-  publish = ".next/static"  # For Next.js non-static export
+  publish = ".next"  # Netlify will detect SSR and use Next adapter
 
 [build.environment]
   NEXT_PUBLIC_SANITY_PROJECT_ID = "dm1tq9mh"
   NEXT_PUBLIC_SANITY_DATASET = "production"
   NODE_VERSION = "18"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"  # Essential for SSR support
 
 [dev]
   framework = "next"
