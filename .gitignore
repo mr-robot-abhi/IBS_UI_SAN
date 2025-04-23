@@ -1,0 +1,65 @@
+# Dependency directories
+node_modules/
+.next/
+.out/
+dist/
+
+# Build files
+*.log
+logs/
+.build/
+
+# Debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local development
+.env*.local
+.env
+.env.development
+.env.test
+.env.production
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production
+.cache/
+.turbo/
+
+# Next.js specific
+.next/cache/
+
+# Sanity Studio (if applicable)
+.sanity/
+
+# System Files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Optional
+*.pem
+*.cer
+*.crt
+*.key
+
+# Debug
+dump.rdb
+*.pid
+*.seed
+*.pid.lock
+
+# Local Netlify folder
+.netlify

@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = ".next/static"  # For Next.js non-static export
+
+[build.environment]
+  NEXT_PUBLIC_SANITY_PROJECT_ID = "dm1tq9mh"
+  NEXT_PUBLIC_SANITY_DATASET = "production"
+  NODE_VERSION = "18"
+
+[dev]
+  framework = "next"
+  targetPort = 3000
+  command = "npm run dev"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
